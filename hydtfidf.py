@@ -9,15 +9,17 @@ from heapq import nlargest
 import string ,re
 import math
 import operator
+import cosim
 
 _stopwords = stopwords.words('english')
 _stopwords.extend(string.punctuation)
 _stopwords.append("rt") 
 
-db= MySQLdb.connect("localhost","root","it-03@CC","osm")
+db= MySQLdb.connect("localhost","root","it-01@CC","osm")
 cursor = db.cursor()
 
-cursor.execute("select sno,ctweet from twitter;") # ctweet has punctuations,stopwords,hyperlinks removed
+tablename = 'SwachhBharat'
+cursor.execute("select sno,ctweet from %s;" % (tablename)) # ctweet has punctuations,stopwords,hyperlinks removed
 db.commit()
 tweetset=cursor.fetchall()
 
@@ -44,7 +46,7 @@ def term_freq(word_dict , no_of_word):
 	return tf
 
 def inverse_freq(tweetset, word_dict):
-	cursor.execute("select count(*) from twitter;") # ctweet has punctuations,stopwords,hyperlinks removed
+	cursor.execute("select count(*) from %s;" % (tablename)) # ctweet has punctuations,stopwords,hyperlinks removed
 	db.commit()
 	tweetno=cursor.fetchall()
 	totdoc= tweetno[0] # total #docs=tot #tweets
@@ -115,34 +117,60 @@ print "\n\n\n"'''
 
 # --- calculating #tfidf of all words -----
 _tfidf = defaultdict(float)
-'''for key,value in sorted_x:	
+for key,value in sorted_x:	
 	_tfidf[key]=_tf[key]*_idf[key]
-	print key,_tfidf[key],_tf[key],_idf[key]'''
+	#print key,_tfidf[key],_tf[key],_idf[key]
 
 # --- ranking of all tweets on tfidf score -----
 for tweet in tweetset:
-	sum=0
+	summ=0
 	#print tweet[1]
 	words= tweet[1].split()
 	#print words
 	for word in words:
 		#print word
-		sum=sum+_tfidf[word]
+		summ=summ+_tfidf[word]
 		#print word,_tfidf[word]
+	#print tweet[1], sum
 	'''try:
-		cursor.execute("update twitter set hyd_tfidf=%s where sno=%s",(sum,tweet[0]))
+		cursor.execute("update %s set hyd_tfidf=%s where sno=%s" % (tablename, `round(summ,10)`,tweet[0]))
 		db.commit()
 	except:
 		print "error"
 	'''
 
-cursor.execute("select distinct tweet, hyd_tfidf from twitter order by hyd_tfidf desc limit 20;")	
+cursor.execute("select distinct ctweet, hyd_tfidf from %s order by hyd_tfidf desc limit 25;" % (tablename))	
 db.commit()
 toptweets=cursor.fetchall();
 i=1
+bool_arr=[0] * 25
 for toptweet in toptweets:
-	print i,toptweet[0]
+	print i,toptweet[0],toptweet[1]
 	i=i+1
+
+i=1
+tweetct=25
+for x in range(tweetct):
+	if bool_arr[x] == 0:
+		bool_arr[x] = 1;
+		print i,toptweets[x][0]
+		i=i+1
+		if i==21:
+			break
+		for z in range(x+1, tweetct):
+			if cosim.cosine_similarity(toptweets[x][0],toptweets[z][0]) > 0.8 :
+				bool_arr[z]=1	
+
+'''
+	if bool_arr[i] == 0
+		print j,toptweet[0]	
+	for nexttweet in range ()
+		cosine_similarity()
+	i=i+1
+	j=j+1
+'''
+
 
 #-----------check which log -------------
 #print math.log(2,2)
+ 
