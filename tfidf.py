@@ -5,6 +5,7 @@ from string import punctuation
 from heapq import nlargest
 import MySQLdb 
 import math
+import cosim
 
 db= MySQLdb.connect("localhost","root","it-03@CC","osm")
 cursor = db.cursor()
@@ -146,50 +147,10 @@ for i in tweet_sno:
 		for word in tokenized_tweet:
 			if word in tf_idf:
 				score = score + tf_idf[word]
-		
-		#cursor.execute("UPDATE twitter set cluster_tf_idf= "+str(round(score,8))+" where sno= "+str(tweet_no))
-		#db.commit()
-		
-'''
-cluster_no= 1
-sno = 1
-for cluster in cluster_array:
-	tf_idf= tf_idf_all[cluster_no-1]
-	for i in range(i, len())
 
-
-cluster_no=1
-sno= 1
-for cluster in cluster_array:
-	if cluster_no==3:
-		break
-	cluster_score= []
-	print "cluster #", cluster_no
-	for tweet in cluster:
-		score=0.0		
-		tf_idf= tf_idf_all[cluster_no-1]
-		if sno==170 or sno==172 or sno==173:
-			print "##tweet is##", tweet
-		for word in tweet:
-			if word in tf_idf:
-				score = score+ tf_idf[word]
-				if sno==170 or sno==172 or sno==173:
-					print word, tf_idf[word]
-		cluster_score.append(score)
-		#print cluster_no
-		#cursor.execute("UPDATE twitter set cluster_tf_idf="+str(round(score,8)) +" where sno="+str(sno) )
-		#db.commit()
-		sno= sno+1
-	cluster_score.sort()
-	scores.append(cluster_score)
-	cluster_no= cluster_no+1
-
-'''
 
 # -------------- selecting top tweets ---------------------
 for i in range(1, cluster_size+1):
-
-
 	print "\n\n\n------------------------Cluster Number------------------------------------------------- ",i
 	#print len(scores[i-1])
 	top_per= no_of_tweets_cluster[i]*0.1
@@ -203,6 +164,25 @@ for i in range(1, cluster_size+1):
 	for tweet in toptweets:
 		print j, tweet[0]
 		j=j+1
+
+
+	
+	kl=1
+	tweetct=int(topno)
+	#arr of size 25 with initial value 0
+	bool_arr=[0] * 25
+
+	for x in range(tweetct):
+		if bool_arr[x] == 0:
+			bool_arr[x] = 1;
+			print kl,toptweets[x][0]
+			kl=kl+1
+			if kl==21:
+				break
+			for z in range(x+1, tweetct):
+				if cosim.cosine_similarity(toptweets[x][0],toptweets[z][0]) > 0.8 :
+					bool_arr[z]=1	
+
 
 #--------------------------------------------------------------
 
