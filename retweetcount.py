@@ -1,12 +1,18 @@
 import MySQLdb
 
-db= MySQLdb.connect("localhost","root","it-03@CC","osm")
-cursor = db.cursor()
-cursor.execute('select distinct ctweet,retweet from twitter order by retweet desc limit 15')
-#cursor.execute('select * from twitter')
-db.commit()
-i=1
-rows = cursor.fetchall()
-for r in rows:
-	print "#",i," ",r[0], "\n \n"
-	i=i+1
+
+def begin(hashtag):
+	tablename=hashtag
+	db= MySQLdb.connect("localhost","root","shruti","osm")
+	cursor = db.cursor()
+	cursor.execute('select distinct tweet,retweet from '+tablename+' order by retweet desc limit 20')
+	#cursor.execute('select * from twitter')
+	db.commit()
+	i=1
+	output={}
+	rows = cursor.fetchall()
+	for r in rows:
+		#print "#",i," ",r[0], "\n \n"
+		output[i]=r[0]
+		i=i+1
+	return output
