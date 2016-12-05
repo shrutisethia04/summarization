@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twitter Analysis</title>
+
+<link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{ url_for('static',filename='css/datepicker3.css')}}" rel="stylesheet">
+<link href="{{ url_for('static',filename='css/styles.css')}}" rel="stylesheet">
+
+
+
+<link href="{{ url_for('static',filename='css/bootstrap-table.css')}}" rel="stylesheet">
+<script src="{{ url_for('static',filename='js/jquery-1.11.1.min.js')}}"></script>
+
+<!--Icons-->
+<script src="{{ url_for('static',filename='js/lumino.glyphs.js')}}"></script>
+<script src="{{ url_for('static',filename='js/highchart.js')}}"></script>
+<script src="{{ url_for('static',filename='js/exporting.js')}}"></script>
+
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+<style>
+#d{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+</style>
+</head>
+
+
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Twitter Tweets And Stock Movement</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ keyword|safe }}</a>
+						
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form>
+			<div class="form-group">
+				
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li ><a >
+<form method="post" action="\upload"><input type="hidden" name="keyword" value="{{ keyword|safe }}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg><input id=d type="submit" value="Twitter Overview" name="submit"></form> </a></li>
+			<!--<li><a href="\tweets"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Twitter Tweets </a></li>-->
+			<li><a href="\stock"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Stock Status</a></li>
+			<li class=active><a href="\corelation"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Corelation </a></li>
+			<li><a href="\tstats"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg>Twitter Model Matrices</a></li>
+			<li><a href="\sstats"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg> Stock Model Matrices</a></li>
+			<li><a href="icons.html"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>
+			<li class="parent ">
+				<a href="#">
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown 
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+		</ul>
+
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Icons</li>
+			</ol>
+		</div><!--/.row-->
+		
+		
+	<!--	<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">120</div>
+							<div class="text-muted">New Orders</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-orange panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">52</div>
+							<div class="text-muted">Comments</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-teal panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">24</div>
+							<div class="text-muted">New Users</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-red panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">25.2k</div>
+							<div class="text-muted">Page Views</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>--><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading"></div>
+					<div class="panel-body">
+						<div id="container"  class="canvas-wrapper">
+							<!---<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>-->
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+
+
+
+
+	</div>	<!--/.main-->
+
+	
+	<script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/chart.min.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/chart-data.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/easypiechart.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/easypiechart-data.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap-datepicker.js')}}"></script>
+         <script src="{{ url_for('static',filename='js/bootstrap-table.js')}}"></script>
+	<script>
+		$('#calendar').datepicker({
+		});
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
+		        $(this).find('em:first').toggleClass("glyphicon-minus");      
+		    }); 
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>
+<script>
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Corelation Between Twitter Tweets and Stock Price'
+        },
+       
+        xAxis: [{
+	   
+            categories:{{ Dates|safe }},
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Tweet  Count',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Stock Price',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value} ',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        
+        series: [{
+            name: 'Positive Tweets',
+            type: 'column',
+            yAxis: 1,
+            data: {{ positive}},
+            
+        }, 
+
+	{
+	 name: 'Negative tweets',
+ 	 type: 'column',
+         yAxis: 1,
+         data: {{ negative}},
+        },
+
+	{
+            name: 'Opening Price',
+            type: 'spline',
+            data:{{ open_price }},
+            
+        },
+	{
+            name: 'Closing Price',
+            type: 'spline',
+            data:{{ close_price }},
+            
+        }
+]
+    });
+});
+</script>	
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script>
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Corelation Between Twitter Tweets and Stock Price'
+        },
+       
+        xAxis: [{
+	    type:'string'
+            categories:{{ date }},
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Tweet  Count',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: 'Stock Price',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value} ',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        
+        series: [{
+            name: 'Positive Tweets',
+            type: 'column',
+            yAxis: 1,
+            data: {{ c}},
+            
+        }, 
+
+	{
+	 name: 'Negative tweets',
+ 	 type: 'column',
+         yAxis: 1,
+         data: {{ c}},
+        },
+
+	{
+            name: 'Stock Price',
+            type: 'spline',
+            data:{{d }},
+            
+        }]
+    });
+});
+</script>

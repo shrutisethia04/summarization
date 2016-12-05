@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event Summarization</title>
+
+<link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{ url_for('static',filename='css/datepicker3.css')}}" rel="stylesheet">
+<link href="{{ url_for('static',filename='css/styles.css')}}" rel="stylesheet">
+
+
+
+<link href="{{ url_for('static',filename='css/bootstrap-table.css')}}" rel="stylesheet">
+
+
+
+
+<!--Icons-->
+<script src="{{ url_for('static',filename='js/lumino.glyphs.js')}}"></script>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Twitter Based Event Summary</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> {{ hashtag|safe }}</a>
+						
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+	
+	
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form>
+			<div class="form-group">
+				
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li ><a href="\hydtfidf\{{hashtag}}"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg>Run Hybrid TFIDF</a></li>
+			<!--<li><a href="\tweets"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Twitter Tweets </a></li>-->
+			<li class="active"><a href="\temptfidf\{{hashtag}}"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg>Run Temporal TFIDF</a></li>
+			<li><a href="\retweet\{{hashtag}}"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> 
+Run Retweet Approach</a></li>
+			<!--<li><a href="\tstats"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg>Twitter Model Matrices</a></li>
+			<li><a href="\sstats"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg> Stock Model Matrices</a></li>-->
+	<!--		<li><a href="icons.html"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>
+			<li class="parent ">
+				<a href="#">
+					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Dropdown 
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+		</ul>
+-->
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Icons</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<!--<div class="row">
+			<div class="col-lg-12">
+				<h3 class="page-header">Overall Weekly Analysis</h3>
+			</div>
+		</div>row-->
+<!--<div class="row">
+			
+			<div class="col-xs-6 col-md-3" style="width:33.33%">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Positive Tweets</h4>
+						<div class="easypiechart" id="easypiechart-orange" data-percent="65" ><span class="percent">{{ p }}%</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-3"style="width:33.33%">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Negative Tweets</h4>
+						<div class="easypiechart" id="easypiechart-teal" data-percent="56" ><span class="percent">{{ n }}%</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 col-md-3"style="width:33.33%">
+				<div class="panel panel-default">
+					<div class="panel-body easypiechart-panel">
+						<h4>Neutral Tweets</h4>
+						<div class="easypiechart" id="easypiechart-red" data-percent="27" ><span class="percent">{{ ne }}%</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+
+
+
+		
+	<!--	<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">120</div>
+							<div class="text-muted">New Orders</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-orange panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked empty-message"><use xlink:href="#stroked-empty-message"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">52</div>
+							<div class="text-muted">Comments</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-teal panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">24</div>
+							<div class="text-muted">New Users</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-red panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">25.2k</div>
+							<div class="text-muted">Page Views</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>--><!--/.row-->	
+		<div class="row">
+			<div >
+				<div class="panel panel-default">
+					<div class="panel-heading">Extractive Summary</div>
+					<div class="panel-body">
+						<table data-toggle="table" data-url="tables/data2.json" >
+						    <thead>
+						    <tr>
+						        <th data-field="id" data-align="right">Cluster Number</th>
+						        <th data-field="pc"style="text-align:center">Tweet</th>
+						      
+						    </tr>
+						    </thead>
+						    <tbody>
+						    <!---<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>-->							{% for row_index in range(0,summary|count) %}
+										<tr>					     													
+											<td >{{row_index +1}}</td> 
+											<td>
+
+{% for row_index1 in range(1,summary[row_index]|count+1) %}
+
+	{{row_index1|safe}} {{summary[row_index][row_index1]|safe}}<br>
+
+
+ {% endfor %}</td>
+										</tr>	
+							{% endfor %}
+
+						    </tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+</div> <!--/.row-->
+
+
+
+
+		<!--<div class="row">
+		<div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Twitter Table</div>
+					<div class="panel-body">
+						<table data-toggle="table" data-url="tables/data2.json" >
+						    <thead>
+						    <tr>
+						        <th data-field="id" data-align="right">Date</th>
+						        <th data-field="pc">Number of Positive Tweets </th>
+						        <th data-field="nc">Number of Negative Tweets</th>
+							<th data-field="nec">Number of Neutral Tweets</th>
+						    </tr>
+						    </thead>
+						    <tbody>
+{% for row_index in range(Dates|count) %}
+    <tr>
+      <td>{{ Dates[row_index]|safe }}</td>
+      <td>{{ positive[row_index]|safe }}</td>
+      <td>{{ negative[row_index]|safe }}</td>
+      <td>{{ neutral[row_index]|safe }}</td>
+    </tr>
+{% endfor %}
+
+
+</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+</div> -->
+	</div>	<!--/.main-->
+
+	<script src="{{ url_for('static',filename='js/jquery-1.11.1.min.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/chart.min.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/chart-data.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/easypiechart.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/easypiechart-data.js')}}"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap-datepicker.js')}}"></script>
+         <script src="{{ url_for('static',filename='js/bootstrap-table.js')}}"></script>
+	<script>
+		$('#calendar').datepicker({
+		});
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
+		        $(this).find('em:first').toggleClass("glyphicon-minus");      
+		    }); 
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>	
+</body>
+
+</html>
