@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+	
+	"name": "Tweet Summarizer",
+	"description": "Summarize any hashtag",
+	"version": "1.0",
+	"author": "Arushi Garg",
+	
+	"browser_action": {
+		"default_title": "Tweet Summarizer",
+		"default_icon": "icon.png"
+	},
+	"content_scripts":[
+		{
+			"matches": [
+				"http://twitter.com/*",
+				"https://twitter.com/*"
+			],
+			"js": ["my_script.js"]
+		}
+	]	
+	
+}
