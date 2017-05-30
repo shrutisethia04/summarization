@@ -10,9 +10,12 @@ python start.py
 On the Browser, localhost:5000 , would open the page wherein you can enter the hashtag
 The script hydtfidf.py runs to generate summary using the hybrid TF-IDF Algorithm.
 
-hydtfidf.py runs the Hybrid TFIDF algorithm. /n
-clustertfidf.py runs Cluster TFIDF algorithm./n
+hydtfidf.py runs the Hybrid TFIDF algorithm. 
+
+clustertfidf.py runs Cluster TFIDF algorithm.
+
 retweetcount.py runs Retweet Count Algorithm.
+
 
 rouge.py calculates ROUGE scores of the entered hashtag.
 ref_summaries contains reference summaries of hashtags
